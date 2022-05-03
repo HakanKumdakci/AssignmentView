@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1A5C3D6C1692C29CB3AF1EBA /* Pods_AssignmentView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 175F1ECF23A2287A2BAFFCB7 /* Pods_AssignmentView.framework */; };
 		28729E1E28212083007BB461 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28729E1D28212083007BB461 /* SettingsTableViewCell.swift */; };
+		28729E2028218F8C007BB461 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28729E1F28218F8C007BB461 /* Response.swift */; };
 		2899F33E281B32A8002F3A41 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2899F33D281B32A8002F3A41 /* AppDelegate.swift */; };
 		2899F340281B32A8002F3A41 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2899F33F281B32A8002F3A41 /* SceneDelegate.swift */; };
 		2899F342281B32A8002F3A41 /* AssignmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2899F341281B32A8002F3A41 /* AssignmentView.swift */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		175F1ECF23A2287A2BAFFCB7 /* Pods_AssignmentView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AssignmentView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		28729E1D28212083007BB461 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		28729E1F28218F8C007BB461 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		2899F33A281B32A8002F3A41 /* AssignmentView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AssignmentView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2899F33D281B32A8002F3A41 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2899F33F281B32A8002F3A41 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				2899F341281B32A8002F3A41 /* AssignmentView.swift */,
 				28CCD4B3281F2BBD0063E0C9 /* AssignmentViewCollectionViewCell.swift */,
 				28ABC36228202AA300D4F93B /* NetworkingService.swift */,
+				28729E1F28218F8C007BB461 /* Response.swift */,
 				28ABC3642820335E00D4F93B /* circleProgress.swift */,
 				28ABC366282066FF00D4F93B /* SettingsViewController.swift */,
 				28729E1D28212083007BB461 /* SettingsTableViewCell.swift */,
@@ -425,6 +428,7 @@
 				28CCD4B4281F2BBD0063E0C9 /* AssignmentViewCollectionViewCell.swift in Sources */,
 				28729E1E28212083007BB461 /* SettingsTableViewCell.swift in Sources */,
 				28ABC367282066FF00D4F93B /* SettingsViewController.swift in Sources */,
+				28729E2028218F8C007BB461 /* Response.swift in Sources */,
 				28ABC3652820335E00D4F93B /* circleProgress.swift in Sources */,
 				2899F342281B32A8002F3A41 /* AssignmentView.swift in Sources */,
 				2899F33E281B32A8002F3A41 /* AppDelegate.swift in Sources */,

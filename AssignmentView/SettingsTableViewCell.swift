@@ -27,7 +27,10 @@ class SettingsTableViewCell: UITableViewCell {
     }()
     
     @objc func actionSwitch(){
+        print(switchButton.isOn, key)
         UserDefaults.standard.set(switchButton.isOn, forKey: key)
+        UserDefaults.standard.synchronize()
+        
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -55,7 +58,6 @@ class SettingsTableViewCell: UITableViewCell {
         titleLabel.topToSuperview()
         titleLabel.bottomToSuperview()
         titleLabel.trailingToLeading(of: switchButton, offset: -8)
-
     }
 
     

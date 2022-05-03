@@ -14,13 +14,12 @@ class SettingsViewController: UIViewController {
     var options: [String: String] = ["Download big images in low priority": "downloadPriority",
                                      "Clean cache after terminate app": "terminateCache",
                                      "Clean cache after app moves to background": "backgroundCache",
-                                     "Allow to use cache": "cache"]
+                                     "Allow to use cache": "regularCache"]
     
     
     lazy var clearCacheButton: UIButton = {
         var btn = UIButton(type: .system)
         btn.setTitle("Clear Cache", for: .normal)
-        btn.backgroundColor = .white
         btn.tintColor = .systemBlue
         btn.layer.cornerRadius = 16
         btn.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
@@ -45,24 +44,29 @@ class SettingsViewController: UIViewController {
         
         title = "Settings"
         
+        view.addSubview(clearCacheButton)
         view.addSubview(tableView)
         // Do any additional setup after loading the view.
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
-        
             
         tableView.topToSuperview(offset: 16, usingSafeArea: true)
         tableView.leadingToSuperview()
         tableView.trailingToSuperview()
-        tableView.bottomToSuperview(offset: -16, usingSafeArea: true)
+        tableView.height(200)
+        tableView.sizeToFit()
+        
+        clearCacheButton.topToBottom(of: tableView)
+        clearCacheButton.leadingToSuperview()
+        clearCacheButton.trailingToSuperview()
+        clearCacheButton.height(48)
     }
     
     @objc func clearCache(){
-        SDImageCache.shared.clearMemory()
-        SDImageCache.shared.clearDisk()
+//        SDImageCache.shared.clearMemory()
+//        SDImageCache.shared.clearDisk()
     }
     
 }
@@ -70,29 +74,20 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == Array(options.keys).count {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.addSubview(clearCacheButton)
-            clearCacheButton.edgesToSuperview()
-            return cell
-        }
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.identifier, for: indexPath) as! SettingsTableViewCell
-        let title = Array(options.keys)[indexPath.row]
+        let title = Array(options.keys).sorted()[indexPath.row]
         guard let key = options[title] else {return cell }
         cell.configure(title: title, key: key)
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Array(options.keys).count + 1
+        return options.count
     }
 }
 
 extension SettingsViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == Array(options.keys).count {
-            return
-        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

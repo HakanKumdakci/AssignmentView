@@ -39,6 +39,8 @@ class AssignmentView: UIViewController {
 
     var subImages: [String] = ["https://db62cod6cnasq.cloudfront.net/user-media/0/image2-500kb.png"]
     
+    let refreshControl = UIRefreshControl()
+    
     lazy var assignmentView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
@@ -51,7 +53,7 @@ class AssignmentView: UIViewController {
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        
+        collectionView.alwaysBounceVertical = true
         return collectionView
     }()
     
@@ -66,9 +68,8 @@ class AssignmentView: UIViewController {
     }()
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        SDImageCacheConfig.default.shouldRemoveExpiredDataWhenTerminate = UserDefaults.standard.bool(forKey: "terminateCache")
-        SDImageCacheConfig.default.shouldRemoveExpiredDataWhenEnterBackground = UserDefaults.standard.bool(forKey: "backgroundCache")
-        SDImageCacheConfig.default.shouldCacheImagesInMemory = UserDefaults.standard.bool(forKey: "cache")
+        setCacheSettings()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -84,10 +85,7 @@ class AssignmentView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SDImageCacheConfig.default.shouldRemoveExpiredDataWhenTerminate = UserDefaults.standard.bool(forKey: "terminateCache")
-        SDImageCacheConfig.default.shouldRemoveExpiredDataWhenEnterBackground = UserDefaults.standard.bool(forKey: "backgroundCache")
-        print(UserDefaults.standard.bool(forKey: "cache"))
-        SDImageCacheConfig.default.shouldCacheImagesInMemory = UserDefaults.standard.bool(forKey: "cache")
+        setCacheSettings()
         
         view.backgroundColor = .white
         
@@ -97,12 +95,28 @@ class AssignmentView: UIViewController {
         
         self.navigationController?.navigationBar.addSubview(settingsButton)
         
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+        
+        
         view.addSubview(assignmentView)
+        assignmentView.refreshControl = refreshControl
     }
     
     @objc func showSettings(){
         let vc = SettingsViewController()
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func didPullToRefresh(_ sender: Any) {
+        assignmentView.reloadData()
+        refreshControl.endRefreshing()
+    }
+    
+    func setCacheSettings(){
+        let userDefaults = UserDefaults.standard
+        SDImageCacheConfig.default.shouldRemoveExpiredDataWhenTerminate = userDefaults.bool(forKey: "terminateCache")
+        SDImageCacheConfig.default.shouldRemoveExpiredDataWhenEnterBackground = userDefaults.bool(forKey: "backgroundCache")
+        SDImageCacheConfig.default.shouldCacheImagesInMemory = userDefaults.bool(forKey: "regularCache")
     }
 
     override func viewWillLayoutSubviews() {
@@ -124,8 +138,7 @@ extension AssignmentView: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AssignmentViewCollectionViewCell.identifier, for: indexPath) as! AssignmentViewCollectionViewCell
         
-        cell.configure(with: subImages[indexPath.row])
-        cell.backgroundColor = .gray
+        cell.configure(with: subImages[indexPath.row], width: self.view.frame.width/3.5, height: 128.0)
         cell.layer.cornerRadius = 8
         return cell
     }
@@ -135,6 +148,6 @@ extension AssignmentView: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.width/3.5 , height: 128.0)
+        return CGSize(width: self.view.frame.width/3.5 , height: 148.0)
     }
 }
