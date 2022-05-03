@@ -7,7 +7,25 @@
 		<key>AssignmentView.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>5</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>2899F339281B32A8002F3A41</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2899F34F281B32A9002F3A41</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2899F359281B32A9002F3A41</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

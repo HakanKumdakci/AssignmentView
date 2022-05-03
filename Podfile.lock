@@ -1,0 +1,22 @@
+PODS:
+  - SDWebImage (5.12.5):
+    - SDWebImage/Core (= 5.12.5)
+  - SDWebImage/Core (5.12.5)
+  - TinyConstraints (4.0.2)
+
+DEPENDENCIES:
+  - SDWebImage
+  - TinyConstraints
+
+SPEC REPOS:
+  trunk:
+    - SDWebImage
+    - TinyConstraints
+
+SPEC CHECKSUMS:
+  SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
+  TinyConstraints: 7b7ccc0c485bb3bb47082138ff28bc33cd49897f
+
+PODFILE CHECKSUM: 9afe8a00e1e76a30d7f9a8cf5cd049ebc5f31bc4
+
+COCOAPODS: 1.11.2
