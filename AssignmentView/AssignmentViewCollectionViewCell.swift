@@ -70,13 +70,14 @@ class AssignmentViewCollectionViewCell: UICollectionViewCell {
     }
     
     func setUpThumbnailSize(width: CGFloat, height: CGFloat) -> CGSize{
-        let maxSize = 4096.0
+        let maxSize = 16384.0
         let scale = UIScreen.main.scale
         let widthModified = UserDefaults.standard.bool(forKey: "thumbnailImage") ? width : maxSize
         let heightModified = UserDefaults.standard.bool(forKey: "thumbnailImage") ? height : maxSize
         if !(UserDefaults.standard.bool(forKey: "thumbnailImage")){
             imageView.contentMode = .scaleAspectFill
         }
+        SDImageCoderHelper.defaultScaleDownLimitBytes = UInt(Int(widthModified) * Int(heightModified) * 4)
         return CGSize(width: widthModified * scale, height: heightModified * scale)
     }
     
@@ -93,24 +94,26 @@ class AssignmentViewCollectionViewCell: UICollectionViewCell {
     }
     
     public func configure(with urlString: String, width: CGFloat, height: CGFloat){
-        
         guard let url = URL(string: urlString) else {return }
-        
+        //if the download continues
         imageView.sd_cancelCurrentImageLoad()
-        
+        // to block load image again
         if imageView.image != nil{
+            imageView.image =  nil
+            imageView.sd_cancelCurrentImageLoad()
+            configure(with: urlString, width: width, height: height)
             return
         }
         
         progressView.startLoading()
         progressView.isHidden = false
-                
-        SDImageCoderHelper.defaultScaleDownLimitBytes = UInt(Int(width) * Int(height) * 4)
-
+        
         let thumbnailSize = setUpThumbnailSize(width: width, height: height)
         
         let options:SDWebImageOptions = setUpOptions(urlString: urlString)
+        
         let isCacheEnabled = UserDefaults.standard.bool(forKey: "regularCache")
+        
         let start = CFAbsoluteTimeGetCurrent()
         imageView.sd_setImage(with: url, placeholderImage: nil, options: options, context: [.imageThumbnailPixelSize: thumbnailSize, .originalStoreCacheType: isCacheEnabled ? SDImageCacheType.all.rawValue : SDImageCacheType.memory.rawValue]) { _, _, _ in
             DispatchQueue.main.async {
@@ -120,22 +123,25 @@ class AssignmentViewCollectionViewCell: UICollectionViewCell {
             guard let image = image,
                   let data = image.pngData() else{return }
             if error != nil {
-                self.progressView.isHidden = false
+                self.progressView.isHidden = true
                 return
             }
             var interval: Double = 0.0
             
             let diff = CFAbsoluteTimeGetCurrent() - start
+            //Below code makes 123.12345678 -> 123.1234
             interval = Double(round(10000 * diff) / 10000)
-            print("Took \(interval) seconds")
+            
             self.progressView.isHidden = true
             
+            //to get kb of image
             let imgData = NSData(data: data)
             self.imageSize = (Double(imgData.count) / 1024.0)
-            
+            //logging the interval
             NetworkingService.shared.sendLog(payLoad: ["loadTime":interval]) { response in
-                print(response.json.loadTime)
+                
                 DispatchQueue.main.async {
+                    //make kb text different color compare to interval
                     self.logLabel.text = "\(response.json.loadTime) "
                     let text = NSMutableAttributedString()
                     text.append(NSAttributedString(string: "\(response.json.loadTime) ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black]));

@@ -32,7 +32,7 @@ class NetworkingService{
                 let json = try JSONSerialization.jsonObject(with: data)
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .useDefaultKeys
-                let object = try! decoder.decode(ResponseHttpBin.self, from: data)
+                let object = try decoder.decode(ResponseHttpBin.self, from: data)
                 completion(object)
             }catch{
                 print("")
