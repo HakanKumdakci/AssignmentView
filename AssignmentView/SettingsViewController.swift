@@ -14,7 +14,8 @@ class SettingsViewController: UIViewController {
     var options: [String: String] = ["Download big images in low priority": "downloadPriority",
                                      "Clean cache after terminate app": "terminateCache",
                                      "Clean cache after app moves to background": "backgroundCache",
-                                     "Allow to use cache": "regularCache"]
+                                     "Allow to use cache": "regularCache",
+                                     "Load images faster": "thumbnailImage"]
     
     
     lazy var clearCacheButton: UIButton = {
@@ -55,7 +56,7 @@ class SettingsViewController: UIViewController {
         tableView.topToSuperview(offset: 16, usingSafeArea: true)
         tableView.leadingToSuperview()
         tableView.trailingToSuperview()
-        tableView.height(200)
+        tableView.height(240)
         tableView.sizeToFit()
         
         clearCacheButton.topToBottom(of: tableView)
@@ -65,8 +66,8 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func clearCache(){
-//        SDImageCache.shared.clearMemory()
-//        SDImageCache.shared.clearDisk()
+        SDImageCache.shared.clearMemory()
+        SDImageCache.shared.clearDisk()
     }
     
 }

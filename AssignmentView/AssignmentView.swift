@@ -117,6 +117,8 @@ class AssignmentView: UIViewController {
         SDImageCacheConfig.default.shouldRemoveExpiredDataWhenTerminate = userDefaults.bool(forKey: "terminateCache")
         SDImageCacheConfig.default.shouldRemoveExpiredDataWhenEnterBackground = userDefaults.bool(forKey: "backgroundCache")
         SDImageCacheConfig.default.shouldCacheImagesInMemory = userDefaults.bool(forKey: "regularCache")
+        SDImageCacheConfig.default.maxDiskAge = 0
+        
     }
 
     override func viewWillLayoutSubviews() {
@@ -138,13 +140,13 @@ extension AssignmentView: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AssignmentViewCollectionViewCell.identifier, for: indexPath) as! AssignmentViewCollectionViewCell
         
-        cell.configure(with: subImages[indexPath.row], width: self.view.frame.width/3.5, height: 128.0)
+        cell.configure(with: images[indexPath.row], width: self.view.frame.width/3.5, height: 128.0)
         cell.layer.cornerRadius = 8
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return subImages.count
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

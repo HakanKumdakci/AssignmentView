@@ -18,7 +18,6 @@ class AssignmentViewCollectionViewCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
-        imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 15
         imageView.layer.masksToBounds = true
         return imageView
@@ -70,31 +69,50 @@ class AssignmentViewCollectionViewCell: UICollectionViewCell {
         progressView.height(54)
     }
     
+    func setUpThumbnailSize(width: CGFloat, height: CGFloat) -> CGSize{
+        let maxSize = 4096.0
+        let scale = UIScreen.main.scale
+        let widthModified = UserDefaults.standard.bool(forKey: "thumbnailImage") ? width : maxSize
+        let heightModified = UserDefaults.standard.bool(forKey: "thumbnailImage") ? height : maxSize
+        if !(UserDefaults.standard.bool(forKey: "thumbnailImage")){
+            imageView.contentMode = .scaleAspectFill
+        }
+        return CGSize(width: widthModified * scale, height: heightModified * scale)
+    }
+    
+    func setUpOptions(urlString: String) -> SDWebImageOptions{
+        if UserDefaults.standard.bool(forKey: "DownloadPriority"){
+            if urlString.split(separator: "-")[1] == "5mb.png" || urlString.split(separator: "-")[1] == "3mb.png"{
+                return [.progressiveLoad,.lowPriority, .scaleDownLargeImages]
+            }else{
+                return [.progressiveLoad ,.highPriority]
+            }
+        }else{
+            return [.progressiveLoad]
+        }
+    }
+    
     public func configure(with urlString: String, width: CGFloat, height: CGFloat){
         
         guard let url = URL(string: urlString) else {return }
         
-        progressView.startLoading()
-        progressView.isHidden = false
+        imageView.sd_cancelCurrentImageLoad()
         
-        let scale = UIScreen.main.scale
-        
-        SDImageCoderHelper.defaultScaleDownLimitBytes = UInt(Int(width) * Int(height) * 4)
-        
-        let thumbnailSize = CGSize(width: width * scale, height: height * scale)
-        
-        var options:SDWebImageOptions = [.progressiveLoad]
-        
-        if UserDefaults.standard.bool(forKey: "DownloadPriority"){
-            if urlString.split(separator: "-")[1] == "5mb.png" || urlString.split(separator: "-")[1] == "3mb.png"{
-                options = [.progressiveLoad, .lowPriority, .scaleDownLargeImages]
-            }else{
-                options = [.progressiveLoad, .highPriority]
-            }
+        if imageView.image != nil{
+            return
         }
         
+        progressView.startLoading()
+        progressView.isHidden = false
+                
+        SDImageCoderHelper.defaultScaleDownLimitBytes = UInt(Int(width) * Int(height) * 4)
+
+        let thumbnailSize = setUpThumbnailSize(width: width, height: height)
+        
+        let options:SDWebImageOptions = setUpOptions(urlString: urlString)
+        let isCacheEnabled = UserDefaults.standard.bool(forKey: "regularCache")
         let start = CFAbsoluteTimeGetCurrent()
-        imageView.sd_setImage(with: url, placeholderImage: nil, options: options, context: [.imageThumbnailPixelSize : thumbnailSize]) { _, _, _ in
+        imageView.sd_setImage(with: url, placeholderImage: nil, options: options, context: [.imageThumbnailPixelSize: thumbnailSize, .originalStoreCacheType: isCacheEnabled ? SDImageCacheType.all.rawValue : SDImageCacheType.memory.rawValue]) { _, _, _ in
             DispatchQueue.main.async {
                 self.progressView.progress = self.imageView.sd_imageProgress.fractionCompleted
             }
@@ -108,7 +126,7 @@ class AssignmentViewCollectionViewCell: UICollectionViewCell {
             var interval: Double = 0.0
             
             let diff = CFAbsoluteTimeGetCurrent() - start
-            interval = Double(round(100000 * diff) / 100000)
+            interval = Double(round(10000 * diff) / 10000)
             print("Took \(interval) seconds")
             self.progressView.isHidden = true
             
@@ -118,7 +136,11 @@ class AssignmentViewCollectionViewCell: UICollectionViewCell {
             NetworkingService.shared.sendLog(payLoad: ["loadTime":interval]) { response in
                 print(response.json.loadTime)
                 DispatchQueue.main.async {
-                    self.logLabel.text = "\(response.json.loadTime) \(String(format: "%.f", self.imageSize))KB"
+                    self.logLabel.text = "\(response.json.loadTime) "
+                    let text = NSMutableAttributedString()
+                    text.append(NSAttributedString(string: "\(response.json.loadTime) ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black]));
+                    text.append(NSAttributedString(string: "\(String(format: "%.f", self.imageSize))KB", attributes: [NSAttributedString.Key.foregroundColor: UIColor(hex: "D80000", alpha: 1.0), NSAttributedString.Key.font: UIFont(name: "Avenir-Medium", size: 12.0)!] ))
+                    self.logLabel.attributedText = text
                 }
             }
         }

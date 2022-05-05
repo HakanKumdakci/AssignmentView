@@ -59,7 +59,6 @@ class SettingsTableViewCell: UITableViewCell {
         titleLabel.bottomToSuperview()
         titleLabel.trailingToLeading(of: switchButton, offset: -8)
     }
-
     
     public func configure(title: String, key: String){
         self.key = key

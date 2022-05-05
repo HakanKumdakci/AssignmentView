@@ -23,6 +23,7 @@
 		28ABC3652820335E00D4F93B /* circleProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28ABC3642820335E00D4F93B /* circleProgress.swift */; };
 		28ABC367282066FF00D4F93B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28ABC366282066FF00D4F93B /* SettingsViewController.swift */; };
 		28CCD4B4281F2BBD0063E0C9 /* AssignmentViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CCD4B3281F2BBD0063E0C9 /* AssignmentViewCollectionViewCell.swift */; };
+		28EF32442822E79B00D18B78 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EF32432822E79B00D18B78 /* UIColorExtension.swift */; };
 		AB084617D9D9599872205181 /* Pods_AssignmentView_AssignmentViewUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AA60088A061167C74AEE3CE /* Pods_AssignmentView_AssignmentViewUITests.framework */; };
 		F18107038940F36A9719A67A /* Pods_AssignmentViewTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4D2E30671DFF212E3F8091 /* Pods_AssignmentViewTests.framework */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 		28ABC3642820335E00D4F93B /* circleProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = circleProgress.swift; sourceTree = "<group>"; };
 		28ABC366282066FF00D4F93B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		28CCD4B3281F2BBD0063E0C9 /* AssignmentViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentViewCollectionViewCell.swift; sourceTree = "<group>"; };
+		28EF32432822E79B00D18B78 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		3AE2EBEACAF2305EE2C95B77 /* Pods-AssignmentViewTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AssignmentViewTests.release.xcconfig"; path = "Target Support Files/Pods-AssignmentViewTests/Pods-AssignmentViewTests.release.xcconfig"; sourceTree = "<group>"; };
 		5AA60088A061167C74AEE3CE /* Pods_AssignmentView_AssignmentViewUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AssignmentView_AssignmentViewUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		890E29B5131E5C524D8C08E3 /* Pods-AssignmentViewTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AssignmentViewTests.debug.xcconfig"; path = "Target Support Files/Pods-AssignmentViewTests/Pods-AssignmentViewTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				2899F33F281B32A8002F3A41 /* SceneDelegate.swift */,
 				2899F341281B32A8002F3A41 /* AssignmentView.swift */,
 				28CCD4B3281F2BBD0063E0C9 /* AssignmentViewCollectionViewCell.swift */,
+				28EF32422822E78600D18B78 /* Extensions */,
 				28ABC36228202AA300D4F93B /* NetworkingService.swift */,
 				28729E1F28218F8C007BB461 /* Response.swift */,
 				28ABC3642820335E00D4F93B /* circleProgress.swift */,
@@ -160,6 +163,14 @@
 				2899F360281B32A9002F3A41 /* AssignmentViewUITestsLaunchTests.swift */,
 			);
 			path = AssignmentViewUITests;
+			sourceTree = "<group>";
+		};
+		28EF32422822E78600D18B78 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				28EF32432822E79B00D18B78 /* UIColorExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		38A9C45473613ADE7BE2FDB6 /* Pods */ = {
@@ -431,6 +442,7 @@
 				28729E2028218F8C007BB461 /* Response.swift in Sources */,
 				28ABC3652820335E00D4F93B /* circleProgress.swift in Sources */,
 				2899F342281B32A8002F3A41 /* AssignmentView.swift in Sources */,
+				28EF32442822E79B00D18B78 /* UIColorExtension.swift in Sources */,
 				2899F33E281B32A8002F3A41 /* AppDelegate.swift in Sources */,
 				2899F340281B32A8002F3A41 /* SceneDelegate.swift in Sources */,
 			);
